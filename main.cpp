@@ -3,22 +3,26 @@
 #include "./menus/menu-binaria-busca.h"
 #include "./menus/menu-avl.h"
 #include "./arvores/binarias/funcoes-compartilhadas.h"
+#include "./menus/menu-b.h"
 using namespace std;
 
 int main() {
     int opcao = 0;
+    nodePoint raiz = nullptr;
+    nodeBPoint raizB = nullptr;
 
-    while (opcao != 4) {
+
+    while (opcao != 5) {
         cout << "Escolha uma opção:" << endl;
         cout << "( 1 ) - Árvore Binária Genérica" << endl;
         cout << "( 2 ) - Árvore Binária de Busca" << endl;
         cout << "( 3 ) - Árvore AVL" << endl;
-        cout << "( 4 ) - Sair" << endl;
+        cout << "( 4 ) - Árvore B" << endl;
+        cout << "( 5 ) - Sair" << endl;
         cin >> opcao;
 
         switch (opcao) {
             case 1: {
-                nodePoint raiz = nullptr;
                 menuBinaria(raiz);
                 break;
             }
@@ -34,6 +38,13 @@ int main() {
                 menuAvl(raizAVL);
                 break;
             }
+
+            case 4: {
+                menuB(raizB);
+                break;
+            }
+
+           
         }
     }
 
