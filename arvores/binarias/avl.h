@@ -157,19 +157,6 @@ nodeAVLPoint AVLRemoverNo(nodeAVLPoint raiz, int valor) {
     return raiz;
 }
 
-// Imprime todos os nós de um nível específico
-void imprimeNivel(nodeAVLPoint raiz, int nivel) {
-    if (raiz == nullptr)
-        return;
-    if (nivel == 1) { // Imprime o nó se estiver no nível desejado
-        cout << raiz->valor << " ";   
-    } else if (nivel > 1) {
-        imprimeNivel(raiz->esquerda, nivel - 1);
-        imprimeNivel(raiz->direita, nivel - 1);
-    }
-}
-
-
 // Pré-ordem
 void preOrdem(nodeAVLPoint raiz) {
     if (raiz != nullptr) {
@@ -194,6 +181,18 @@ void posOrdem(nodeAVLPoint raiz) {
         posOrdem(raiz->esquerda);      // Percorre a subárvore esquerda
         posOrdem(raiz->direita);       // Percorre a subárvore direita
         cout << raiz->valor << " ";    // Visita a raiz
+    }
+}
+
+// Imprime todos os nós de um nível específico
+void imprimeNivel(nodeAVLPoint raiz, int nivel) {
+    if (raiz == nullptr)
+        return;
+    if (nivel == 1) { // Imprime o nó se estiver no nível desejado
+        cout << raiz->valor << " ";   
+    } else if (nivel > 1) {
+        imprimeNivel(raiz->esquerda, nivel - 1);
+        imprimeNivel(raiz->direita, nivel - 1);
     }
 }
 

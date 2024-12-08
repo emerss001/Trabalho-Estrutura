@@ -9,7 +9,7 @@ using namespace std;
 
 
 void menuBinaria(nodePoint &raiz) {
-    int opcao;
+    int opcao = 0;
 
     while(opcao != 8) {
         cout << "Escolha uma opção:" << endl;

@@ -160,6 +160,30 @@ nodeBPoint inserirValorB(nodeBPoint raiz, int valor) {
     return raiz;
 }
 
+void buscarValorB(nodeBPoint raiz, int valor) {
+    if (raiz == nullptr) {
+        cout << "Valor não encontrado." << endl;
+        return;
+    }
+
+    int i = 0;
+
+    // Percorre os valores no nó atual
+    while (i < raiz->quantidadeValores) {
+        if (raiz->valores[i] == valor) {
+            cout << "Valor encontrado na posição [ " << i << " ] " << "no nó de endereço: " << raiz << endl;
+            return;
+        } else if (valor < raiz->valores[i]) {
+            // Busca no filho correspondente
+            buscarValorB(raiz->filhos[i], valor);
+            return; // Evita continuar o loop após a recursão
+        }
+        i++;
+    }
+
+    // Se não encontrou, verifica o último filho
+    buscarValorB(raiz->filhos[i], valor);
+}
 
 void imprimeNivel(nodeBPoint raiz, int nivel) {
     if (raiz == nullptr) return;
@@ -212,20 +236,51 @@ void exibirPorNivel(nodeBPoint raiz) {
     }
 }
 
-void exibirValoresNo(nodeBPoint no) {
-    if (no == nullptr) {
-        cout << "Nó vazio." << endl;
+void preOrdemB(nodeBPoint raiz) {
+    if (raiz == nullptr) {
         return;
     }
 
-    cout << "Valores do nó: ";
-    for (int i = 0; i < no->quantidadeValores; i++) {
-        cout << no->valores[i];
-        if (i < no->quantidadeValores - 1) cout << ", ";
+    // 1. Visita todos os valores no nó atual
+    for (int i = 0; i < raiz->quantidadeValores; i++) {
+        cout << raiz->valores[i] << " ";
     }
-    cout << endl;
 
-    exibirPorNivel(no->filhos[0]);
+    // 2. Percorre recursivamente cada filho
+    for (int i = 0; i <= raiz->quantidadeValores; i++) {
+        preOrdemB(raiz->filhos[i]);
+    }
 }
+
+void emOrdemB(nodeBPoint raiz) {
+    if (raiz == nullptr) {
+        return;
+    }
+
+    for (int i = 0; i < raiz->quantidadeValores; i++) {
+        emOrdemB(raiz->filhos[i]);    // Percorre o filho à esquerda do valor
+        cout << raiz->valores[i] << " "; // Visita o valor atual
+    }
+    emOrdemB(raiz->filhos[raiz->quantidadeValores]); // Percorre o último filho
+}
+
+void posOrdemB(nodeBPoint raiz) {
+    if (raiz == nullptr) {
+        return;
+    }
+
+    // Percorre recursivamente todos os filhos
+    for (int i = 0; i <= raiz->quantidadeValores; i++) {
+        posOrdemB(raiz->filhos[i]);
+    }
+
+    // Após os filhos, visita os valores do nó atual
+    for (int i = 0; i < raiz->quantidadeValores; i++) {
+        cout << raiz->valores[i] << " ";
+    }
+}
+
+
+   
 
 #endif

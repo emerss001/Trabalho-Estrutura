@@ -10,7 +10,7 @@ void menuB(nodeBPoint &raiz) {
 
     while (opcao != 8) {
         cout << "Escolha uma opção:" << endl;
-        cout << "( 1 ) - Adicionar nó" << endl;
+        cout << "( 1 ) - Adicionar um valor" << endl;
         cout << "( 2 ) - Remover nó" << endl;
         cout << "( 3 ) - Buscar nó" << endl;
         cout << "( 4 ) - Exibir em Pré-ordem" << endl;
@@ -27,6 +27,36 @@ void menuB(nodeBPoint &raiz) {
                 cout << "Digite o valor do nó: ";
                 cin >> novoNo;
                 raiz = inserirValorB(raiz, novoNo);
+                cout << endl;
+                break;
+            }
+
+            case 3: {
+                int valor;
+                cout << "Digite o valor a ser buscado: ";
+                cin >> valor;
+                buscarValorB(raiz, valor);
+                cout << endl;
+                break;
+            }
+
+            case 4: {
+                cout << "Exibindo em Pré-ordem:" << endl;
+                preOrdemB(raiz);
+                cout << endl;
+                break;
+            }
+
+            case 5: {
+                cout << "Exibindo em Em ordem:" << endl;
+                emOrdemB(raiz);
+                cout << endl;
+                break;
+            }
+
+            case 6: {
+                cout << "Exibindo em Pós-ordem:" << endl;
+                posOrdemB(raiz);
                 cout << endl;
                 break;
             }
