@@ -59,7 +59,7 @@ void menuBinaria(nodePoint &raiz) {
                 cout << "Digite o valor do nó a ser buscado: ";
                 cin >> valor;
                 nodePoint noBuscado = buscaNoBinaria(raiz, valor);
-                if (noBuscado != NULL) {
+                if (noBuscado != nullptr) {
                     cout << "Nó encontrado: " << noBuscado->valor << " no endereço " << noBuscado << endl;
                 } else {
                     cout << "Nó não encontrado." << endl;

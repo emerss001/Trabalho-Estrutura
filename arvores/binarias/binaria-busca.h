@@ -35,7 +35,7 @@ nodePoint adicionarNo(nodePoint raiz, nodePoint novoNo) {
  * @return nodePoint Ponteiro para o nó encontrado ou nullptr se não encontrado.
  */
 nodePoint buscaNo(nodePoint raiz, int valor) {
-    if (raiz == nullptr) return raiz; // Se a árvore estiver vazia, retorna nullptr.
+    if (raiz == nullptr) return nullptr; // Se a árvore estiver vazia, retorna nullptr.
     if (raiz->valor == valor) return raiz; // Se o valor for encontrado na raiz, retorna a raiz.
 
     if (raiz->valor > valor) return buscaNo(raiz->esquerda, valor); // Busca na subárvore esquerda.
