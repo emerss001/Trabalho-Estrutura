@@ -12,14 +12,17 @@ void menuTrie(nodeTriePoint &raiz) {
     raiz = new nodeTrie(); // Cria uma nova raiz se ela ainda não existir
     }
 
-    int opcao;
+    int opcao = 0;
 
-    while(opcao != 4) {
+    while(opcao != 5) {
+        cout << endl;
         cout << "Escolha uma opção:" << endl;
         cout << "( 1 ) - Adicionar palavra" << endl;
         cout << "( 2 ) - Buscar palavra" << endl;
         cout << "( 3 ) - Buscar por prefixo" << endl;
-        cout << "( 4 ) - Voltar" << endl;
+        cout << "( 4 ) - Remover palavra" << endl;
+        cout << "( 5 ) - Voltar" << endl;
+        cout << "Digite a opção desejada: ";
         cin >> opcao;
         cout << endl;
 
@@ -52,7 +55,11 @@ void menuTrie(nodeTriePoint &raiz) {
             }
 
             case 4: {
-                cout << "Voltando..." << endl;
+                string palavra;
+                cout << "Digite a palavra a ser removida: ";
+                cin >> palavra;
+                remover(raiz, palavra);
+                cout << endl;
                 break;
             }
 

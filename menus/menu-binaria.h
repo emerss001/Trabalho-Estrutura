@@ -12,6 +12,7 @@ void menuBinaria(nodePoint &raiz) {
     int opcao = 0;
 
     while(opcao != 8) {
+        cout << endl;
         cout << "Escolha uma opção:" << endl;
         cout << "( 1 ) - Adicionar nó" << endl;
         cout << "( 2 ) - Remover nó" << endl;
@@ -21,6 +22,7 @@ void menuBinaria(nodePoint &raiz) {
         cout << "( 6 ) - Exibir em Pós-ordem" << endl;
         cout << "( 7 ) - Exibir Por Nível" << endl;
         cout << "( 8 ) - Voltar" << endl;
+        cout << "Digite a opção desejada: ";
         cin >> opcao;
         cout << endl;
 
@@ -31,6 +33,11 @@ void menuBinaria(nodePoint &raiz) {
                 cin >> novoNo;
                 raiz = adicionarNoBinaria(raiz, criaNovoNo(novoNo));
                 cout << endl;
+                if (raiz != NULL) {
+                    cout << "Nó adicionado com sucesso." << endl;
+                } else {
+                    cout << "Erro ao adicionar nó." << endl;
+                }
                 break;
             }
             
@@ -95,6 +102,7 @@ void menuBinaria(nodePoint &raiz) {
 
             default: {
                 cout << "Opção inválida. Tente novamente." << endl;
+                cout << endl;
                 break;
             }
            

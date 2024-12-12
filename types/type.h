@@ -54,4 +54,14 @@ typedef struct nodeTrie {
 
 typedef nodeTrie* nodeTriePoint; // Ponteiro para nodeTrie
 
+typedef struct heap {
+    int valor[50];
+    int tamanho;
+
+    heap() {
+        tamanho = 0;
+    }
+};
+
+
 #endif // TYPE_H

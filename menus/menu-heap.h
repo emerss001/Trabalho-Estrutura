@@ -1,22 +1,20 @@
-#ifndef MENU_BINARIA_BUSCA_H
-#define MENU_BINARIA_BUSCA_H
+#ifndef MENU_HEAP_H
+#define MENU_HEAP_H
 
 #include <iostream>
 #include "../types/type.h"
-#include "../arvores/binarias/binaria-busca.h"
-#include "../arvores/binarias/funcoes-compartilhadas.h"
+#include "../arvores/heap.h"
 using namespace std;
 
-
-void menuBinariaBusca(nodePoint &raiz) {
-    int opcao;
+void menuHeap(heap &heap) {
+    int opcao = 0;
 
     while(opcao != 8) {
         cout << endl;
         cout << "Escolha uma opção:" << endl;
-        cout << "( 1 ) - Adicionar nó" << endl;
-        cout << "( 2 ) - Remover nó" << endl;
-        cout << "( 3 ) - Buscar nó" << endl;
+        cout << "( 1 ) - Inserir valor" << endl;
+        cout << "( 2 ) - Remover valor" << endl;
+        cout << "( 3 ) - Buscar valor" << endl;
         cout << "( 4 ) - Exibir em Pré-ordem" << endl;
         cout << "( 5 ) - Exibir em Em ordem" << endl;
         cout << "( 6 ) - Exibir em Pós-ordem" << endl;
@@ -28,69 +26,53 @@ void menuBinariaBusca(nodePoint &raiz) {
 
         switch (opcao) {
             case 1: {
-                int valor;
-                cout << "Digite o valor do nó: ";
-                cin >> valor;
-                raiz = adicionarNo(raiz, criaNovoNo(valor));
-                if (raiz != NULL) {
-                    cout << "Nó adicionado com sucesso." << endl;
-                } else {
-                    cout << "Erro ao adicionar nó." << endl;
-                }
+                int novoValor;
+                cout << "Digite o valor a ser inserido: ";
+                cin >> novoValor;
+                inserir(heap, novoValor);
                 cout << endl;
                 break;
             }
             
             case 2: {
-                int valor;
-                cout << "Digite o valor do nó a ser removido: ";
-                cin >> valor;
-                raiz = removerNo(raiz, valor);
-                if (raiz != NULL) {
-                    cout << "Nó removido com sucesso." << endl;
-                } else {
-                    cout << "Nó não encontrado." << endl;
-                }
+                removerValor(heap);
+                cout << endl;
                 break;
             }
 
             case 3: {
                 int valor;
-                cout << "Digite o valor do nó a ser buscado: ";
+                cout << "Digite o valor a ser buscado: ";
                 cin >> valor;
-                nodePoint noBuscado = buscaNo(raiz, valor);
-                if (noBuscado != NULL) {
-                    cout << "Nó encontrado: " << noBuscado->valor << " no endereço " << noBuscado << endl;
-                } else {
-                    cout << "Nó não encontrado." << endl;
-                }
+                buscarValor(heap, valor);
+                cout << endl;
                 break;
             }
 
             case 4: {
                 cout << "Exibindo em Pré-ordem:" << endl;
-                preOrdem(raiz);
+                exibirPreOrdem(heap);
                 cout << endl;
                 break;
             }
 
             case 5: {
                 cout << "Exibindo em Em ordem:" << endl;
-                emOrdem(raiz);
+                exibirEmOrdem(heap);
                 cout << endl;
                 break;
             }
 
             case 6: {
                 cout << "Exibindo em Pós-ordem:" << endl;
-                posOrdem(raiz);
+                exibirPosOrdem(heap);
                 cout << endl;
                 break;
             }
 
             case 7: {
                 cout << "Exibindo Por Nível:" << endl;
-                porNivel(raiz);
+                exibirPorNivel(heap);
                 cout << endl;
                 break;
             }
@@ -104,11 +86,9 @@ void menuBinariaBusca(nodePoint &raiz) {
                 cout << "Opção inválida. Tente novamente." << endl;
                 break;
             }
-           
         }
-
     }
-    
 }
+
 
 #endif

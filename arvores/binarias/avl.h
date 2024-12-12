@@ -1,8 +1,16 @@
+#ifndef AVL_H
+#define AVL_H
+
 #include <iostream>
 #include "../../types/type.h"
 using namespace std;
 
-// Cria um novo nó da arvore AVL com o valor fornecido
+/**
+ * @brief Cria um novo nó da árvore AVL com o valor fornecido.
+ * 
+ * @param valor Valor a ser atribuído ao novo nó.
+ * @return nodeAVLPoint Ponteiro para o novo nó criado.
+ */
 nodeAVLPoint criaNovoNoAVL(int valor) {
     nodeAVLPoint novoNo = new nodeAVL;
     novoNo->valor = valor;
@@ -12,24 +20,45 @@ nodeAVLPoint criaNovoNoAVL(int valor) {
     return novoNo;
 }
 
-// Retorna a altura do maior nó
+/**
+ * @brief Retorna a altura do maior nó.
+ * 
+ * @param alturaEsquerda Altura da subárvore esquerda.
+ * @param alturaDireita Altura da subárvore direita.
+ * @return int A maior altura entre as duas subárvores.
+ */
 int max(int alturaEsquerda, int alturaDireita) {
     return (alturaEsquerda > alturaDireita) ? alturaEsquerda : alturaDireita;
 }
 
-// Retorna a altura de um nó
+/**
+ * @brief Retorna a altura de um nó.
+ * 
+ * @param alturaDaSubArvore Ponteiro para o nó cuja altura será retornada.
+ * @return int Altura do nó.
+ */
 int altura(nodeAVLPoint alturaDaSubArvore) {
     return alturaDaSubArvore ? alturaDaSubArvore->altura : 0;
 }
 
-// Retorna o fatore de balanceamento de um nó
+/**
+ * @brief Retorna o fator de balanceamento de um nó.
+ * 
+ * @param noAtual Ponteiro para o nó cujo fator de balanceamento será retornado.
+ * @return int Fator de balanceamento do nó.
+ */
 int fatorDeBalanceamento(nodeAVLPoint noAtual) {
     return noAtual ? altura(noAtual->esquerda) - altura(noAtual->direita) : 0;
 }
 
+/**
+ * @brief Realiza uma rotação à direita na subárvore com raiz em raizAtual.
+ * 
+ * @param raizAtual Ponteiro para a raiz da subárvore.
+ * @return nodeAVLPoint Nova raiz da subárvore após a rotação.
+ */
 nodeAVLPoint rotacaoDireita(nodeAVLPoint raizAtual) {
-    // Nova raiz será a subárvore esquerda
-    nodeAVLPoint novaRaiz = raizAtual->esquerda;
+    nodeAVLPoint novaRaiz = raizAtual->esquerda; // Nova raiz será a subárvore esquerda
 
     // Ajuste dos ponteiros
     raizAtual->esquerda = novaRaiz->direita;  // Subárvore direita da nova raiz torna-se a subárvore esquerda da raiz atual
@@ -39,13 +68,17 @@ nodeAVLPoint rotacaoDireita(nodeAVLPoint raizAtual) {
     raizAtual->altura = max(altura(raizAtual->esquerda), altura(raizAtual->direita)) + 1;
     novaRaiz->altura = max(altura(novaRaiz->esquerda), altura(novaRaiz->direita)) + 1;
 
-    // Retorna a nova raiz
-    return novaRaiz;
+    return novaRaiz; // Retorna a nova raiz
 }
 
+/**
+ * @brief Realiza uma rotação à esquerda na subárvore com raiz em raizAtual.
+ * 
+ * @param raizAtual Ponteiro para a raiz da subárvore.
+ * @return nodeAVLPoint Nova raiz da subárvore após a rotação.
+ */
 nodeAVLPoint rotacaoEsquerda(nodeAVLPoint raizAtual) {
-    // Nova raiz será a subárvore direita
-    nodeAVLPoint novaRaiz = raizAtual->direita;
+    nodeAVLPoint novaRaiz = raizAtual->direita; // Nova raiz será a subárvore direita
 
     // Ajuste dos ponteiros
     raizAtual->direita = novaRaiz->esquerda;  // Subárvore esquerda da nova raiz torna-se a subárvore direita da raiz atual
@@ -55,15 +88,21 @@ nodeAVLPoint rotacaoEsquerda(nodeAVLPoint raizAtual) {
     raizAtual->altura = max(altura(raizAtual->esquerda), altura(raizAtual->direita)) + 1;
     novaRaiz->altura = max(altura(novaRaiz->esquerda), altura(novaRaiz->direita)) + 1;
 
-    // Retorna a nova raiz
-    return novaRaiz;
+    return novaRaiz; // Retorna a nova raiz
 }
 
+/**
+ * @brief Adiciona um nó na árvore AVL, retornando a nova raiz.
+ * 
+ * @param raiz Ponteiro para o nó raiz da árvore.
+ * @param novoNo Ponteiro para o novo nó a ser adicionado.
+ * @return nodeAVLPoint Ponteiro para a nova raiz da árvore.
+ */
 nodeAVLPoint AVLAdicionarNo(nodeAVLPoint raiz, nodeAVLPoint novoNo) {
-    if (raiz == nullptr) return novoNo;
+    if (raiz == nullptr) return novoNo; // Se a raiz estiver vazia, novo nó será a raiz.
 
     if (novoNo->valor < raiz->valor) {
-        raiz->esquerda = AVLAdicionarNo(raiz->esquerda, novoNo);
+        raiz->esquerda = AVLAdicionarNo(raiz->esquerda, novoNo); // Adiciona na subárvore esquerda.
 
         // Checa se a árvore está desbalanceada
         if ((altura(raiz->esquerda) - altura(raiz->direita)) == 2) {
@@ -76,7 +115,7 @@ nodeAVLPoint AVLAdicionarNo(nodeAVLPoint raiz, nodeAVLPoint novoNo) {
         }
 
     } else if (novoNo->valor > raiz->valor) {
-        raiz->direita = AVLAdicionarNo(raiz->direita, novoNo);
+        raiz->direita = AVLAdicionarNo(raiz->direita, novoNo); // Adiciona na subárvore direita.
 
         // Checa se a árvore está desbalanceada
         if ((altura(raiz->esquerda) - altura(raiz->direita)) == -2) {
@@ -93,20 +132,25 @@ nodeAVLPoint AVLAdicionarNo(nodeAVLPoint raiz, nodeAVLPoint novoNo) {
         return raiz;
     }
 
-    raiz->altura = 1 + max(altura(raiz->esquerda), altura(raiz->direita));
+    raiz->altura = 1 + max(altura(raiz->esquerda), altura(raiz->direita)); // Atualiza a altura da raiz.
 
-    return raiz;
+    return raiz; // Retorna a raiz atualizada.
 }
 
-
-// sem testar mas tá funcionando kkkk
+/**
+ * @brief Remove um nó com o valor especificado e retorna a nova raiz.
+ * 
+ * @param raiz Ponteiro para o nó raiz da árvore.
+ * @param valor Valor do nó a ser removido.
+ * @return nodeAVLPoint Ponteiro para a nova raiz da árvore.
+ */
 nodeAVLPoint AVLRemoverNo(nodeAVLPoint raiz, int valor) {
-    if (raiz == nullptr) return raiz;
+    if (raiz == nullptr) return raiz; // Se a árvore estiver vazia, retorna nullptr.
 
     if (valor < raiz->valor) {
-        raiz->esquerda = AVLRemoverNo(raiz->esquerda, valor);
+        raiz->esquerda = AVLRemoverNo(raiz->esquerda, valor); // Remove da subárvore esquerda.
     } else if (valor > raiz->valor) {
-        raiz->direita = AVLRemoverNo(raiz->direita, valor);
+        raiz->direita = AVLRemoverNo(raiz->direita, valor); // Remove da subárvore direita.
     } else {
         if (raiz->esquerda == nullptr || raiz->direita == nullptr) {
             nodeAVLPoint temp = raiz->esquerda ? raiz->esquerda : raiz->direita;
@@ -130,12 +174,13 @@ nodeAVLPoint AVLRemoverNo(nodeAVLPoint raiz, int valor) {
         }
     }
 
-    if (raiz == nullptr) return raiz;
+    if (raiz == nullptr) return raiz; // Se a árvore estiver vazia após a remoção, retorna nullptr.
 
-    raiz->altura = 1 + max(altura(raiz->esquerda), altura(raiz->direita));
+    raiz->altura = 1 + max(altura(raiz->esquerda), altura(raiz->direita)); // Atualiza a altura da raiz.
 
-    int fator = fatorDeBalanceamento(raiz);
+    int fator = fatorDeBalanceamento(raiz); // Calcula o fator de balanceamento.
 
+    // Realiza rotações se necessário para balancear a árvore.
     if (fator > 1 && fatorDeBalanceamento(raiz->esquerda) >= 0) {
         return rotacaoDireita(raiz);
     }
@@ -154,10 +199,14 @@ nodeAVLPoint AVLRemoverNo(nodeAVLPoint raiz, int valor) {
         return rotacaoEsquerda(raiz);
     }
 
-    return raiz;
+    return raiz; // Retorna a raiz atualizada.
 }
 
-// Pré-ordem
+/**
+ * @brief Realiza a travessia pré-ordem na árvore AVL.
+ * 
+ * @param raiz Ponteiro para o nó raiz da árvore.
+ */
 void preOrdem(nodeAVLPoint raiz) {
     if (raiz != nullptr) {
         cout << raiz->valor << " ";    // Visita a raiz
@@ -166,7 +215,11 @@ void preOrdem(nodeAVLPoint raiz) {
     }
 }
 
-// Em ordem
+/**
+ * @brief Realiza a travessia em ordem na árvore AVL.
+ * 
+ * @param raiz Ponteiro para o nó raiz da árvore.
+ */
 void emOrdem(nodeAVLPoint raiz) {
     if (raiz != nullptr) {
         emOrdem(raiz->esquerda);       // Percorre a subárvore esquerda
@@ -175,7 +228,11 @@ void emOrdem(nodeAVLPoint raiz) {
     }
 }
 
-// Pós-ordem
+/**
+ * @brief Realiza a travessia pós-ordem na árvore AVL.
+ * 
+ * @param raiz Ponteiro para o nó raiz da árvore.
+ */
 void posOrdem(nodeAVLPoint raiz) {
     if (raiz != nullptr) {
         posOrdem(raiz->esquerda);      // Percorre a subárvore esquerda
@@ -184,7 +241,12 @@ void posOrdem(nodeAVLPoint raiz) {
     }
 }
 
-// Imprime todos os nós de um nível específico
+/**
+ * @brief Imprime todos os nós de um nível específico.
+ * 
+ * @param raiz Ponteiro para o nó raiz da árvore.
+ * @param nivel Nível a ser impresso.
+ */
 void imprimeNivel(nodeAVLPoint raiz, int nivel) {
     if (raiz == nullptr)
         return;
@@ -196,9 +258,11 @@ void imprimeNivel(nodeAVLPoint raiz, int nivel) {
     }
 }
 
-
-
-// Imprime os nós por nível (da raiz para baixo)
+/**
+ * @brief Imprime os nós por nível (da raiz para baixo).
+ * 
+ * @param raiz Ponteiro para o nó raiz da árvore.
+ */
 void porNivel(nodeAVLPoint raiz) {
     int h = altura(raiz); // Calcula a altura da árvore
     for (int i = 1; i <= h; i++) {
@@ -207,12 +271,19 @@ void porNivel(nodeAVLPoint raiz) {
     }
 }
 
-
-// Busca um nó na árvore
+/**
+ * @brief Busca um nó na árvore AVL.
+ * 
+ * @param raiz Ponteiro para o nó raiz da árvore.
+ * @param valor Valor a ser buscado na árvore.
+ * @return nodeAVLPoint Ponteiro para o nó encontrado ou nullptr se não encontrado.
+ */
 nodeAVLPoint AVLbuscaNo(nodeAVLPoint raiz, int valor) {
-    if (raiz == nullptr) return raiz;
-    if (raiz->valor == valor) return raiz;
+    if (raiz == nullptr) return raiz; // Se a árvore estiver vazia, retorna nullptr.
+    if (raiz->valor == valor) return raiz; // Se o valor for encontrado na raiz, retorna a raiz.
 
-    if (raiz->valor > valor) return AVLbuscaNo(raiz->esquerda, valor);
-    return AVLbuscaNo(raiz->direita, valor);
+    if (raiz->valor > valor) return AVLbuscaNo(raiz->esquerda, valor); // Busca na subárvore esquerda.
+    return AVLbuscaNo(raiz->direita, valor); // Busca na subárvore direita.
 }
+
+#endif
