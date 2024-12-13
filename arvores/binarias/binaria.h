@@ -39,16 +39,17 @@ nodePoint adicionarNoBinaria(nodePoint raiz, nodePoint novoNo) {
  * @return nodePoint Ponteiro para o nó encontrado ou nullptr se não encontrado.
  */
 nodePoint buscaNoBinaria(nodePoint raiz, int valor) {
-    if (raiz == nullptr) return nullptr;  // Se a árvore estiver vazia, retorna nullptr.
-    if (raiz->valor == valor) return raiz;  // Se o valor for encontrado na raiz, retorna a raiz.
+    if (raiz == nullptr) return nullptr; // Se a árvore estiver vazia, retorna nullptr.
+    if (raiz->valor == valor) return raiz; // Se o valor for encontrado na raiz, retorna a raiz.
 
-    // Verifica se o valor está no nó à esquerda ou à direita.
-    if (raiz->esquerda->valor == valor) return raiz->esquerda;
-    if (raiz->direita->valor == valor) return raiz->direita;
-    
     // Busca recursivamente no lado esquerdo.
-    return buscaNoBinaria(raiz->esquerda, valor);
+    nodePoint resultado = buscaNoBinaria(raiz->esquerda, valor);
+    if (resultado != nullptr) return resultado; // Se o valor foi encontrado à esquerda, retorna.
+
+    // Busca recursivamente no lado direito.
+    return buscaNoBinaria(raiz->direita, valor);
 }
+
 
 /**
  * @brief Remove um nó com o valor especificado e retorna a nova raiz.
